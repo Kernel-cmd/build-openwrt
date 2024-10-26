@@ -111,7 +111,7 @@ tun:
     - "8000::/1"
 
 proxies:
-  - name: 台湾谷歌[联通直连]
+  - name: TW
     type: vless
     server: 34.80.173.121
     port: 443
@@ -124,7 +124,7 @@ proxies:
       public-key: 5os-UBV1w11xtkpPJA9QZRL4q49BNwoyjDB4yJRYoko
     client-fingerprint: chrome
 
-  - name: 香港谷歌[联通直连]
+  - name: HK
     type: vless
     server: 2600:1900:41a0:20b:0:d:0:0
     port: 443
@@ -137,7 +137,7 @@ proxies:
       public-key: 5os-UBV1w11xtkpPJA9QZRL4q49BNwoyjDB4yJRYoko
     client-fingerprint: chrome
 
-  - name: 日本甲骨文[移动直连]
+  - name: JP
     type: vless
     server: 138.2.40.110
     port: 443
@@ -150,7 +150,7 @@ proxies:
       public-key: TSNtcEdzYv6PI3awG-fwVtl9XufVNigDEVDqpK0htjg
     client-fingerprint: chrome
 
-  - name: 韩国甲骨文[三网直连]
+  - name: KR
     type: vless
     server: 146.56.159.99
     port: 443
@@ -164,7 +164,7 @@ proxies:
       short-id: fe60318a2ee38f77
     client-fingerprint: chrome
 
-  - name: RN美国[备用]
+  - name: US
     type: vless
     server: 107.173.156.139
     port: 443
@@ -182,33 +182,33 @@ proxies:
     type: dns
 
 proxy-groups:
-  - name: 自动选择
+  - name: AUTO
     type: url-test
     url: https://www.apple.com
     interval: 300
     tolerance: 150
     expected-status: 204
     proxies:
-      - 台湾谷歌[联通直连]
-      - 香港谷歌[联通直连]
-      - 日本甲骨文[移动直连]
-      - 韩国甲骨文[三网直连]
-      - RN美国[备用]
+      - TW
+      - HK
+      - JP
+      - KR
+      - US
 
-  - name: 手动选择
+  - name: MANUAL
     type: select
     proxies:
-      - 自动选择
+      - AUTO
       - DIRECT
-      - 台湾谷歌[联通直连]
-      - 香港谷歌[联通直连]
-      - 日本甲骨文[移动直连]
-      - 韩国甲骨文[三网直连]
-      - RN美国[备用]
+      - TW
+      - HK
+      - JP
+      - KR
+      - US
 
 
 rule-providers:
-  去广告:
+  blockAD:
     type: http
     behavior: domain
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
@@ -359,40 +359,40 @@ rules:
 
 
   - RULE-SET,applications,DIRECT
-  - RULE-SET,netflix,手动选择
+  - RULE-SET,netflix,MANUAL
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
-  - RULE-SET,去广告,REJECT
+  - RULE-SET,blockAD,REJECT
   - RULE-SET,NoPcdn,REJECT
   - RULE-SET,NoOperatorHijack,REJECT
   - DOMAIN-KEYWORD,szbdyd,REJECT
 
-  - DOMAIN-KEYWORD,gemini,手动选择
+  - DOMAIN-KEYWORD,gemini,MANUAL
   - DOMAIN-KEYWORD,builtwith,DIRECT
   - DOMAIN-KEYWORD,velo,DIRECT
   - DOMAIN-KEYWORD,xda,DIRECT
   - DOMAIN-KEYWORD,daxiaamu,DIRECT
   - DOMAIN-KEYWORD,nodeseek,DIRECT
   - DOMAIN-KEYWORD,wechat,DIRECT
-  - DOMAIN-KEYWORD,macked,手动选择
-  - DOMAIN-KEYWORD,sourceforge,手动选择
-  - DOMAIN-KEYWORD,porn,自动选择
-  - DOMAIN-KEYWORD,tanhuazu,手动选择
-  - DOMAIN-KEYWORD,pikpak,手动选择
-  - DOMAIN-KEYWORD,v2rayssr,手动选择
-  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,手动选择
-  - DOMAIN-SUFFIX,googleapis.cn,手动选择
+  - DOMAIN-KEYWORD,macked,MANUAL
+  - DOMAIN-KEYWORD,sourceforge,MANUAL
+  - DOMAIN-KEYWORD,porn,AUTO
+  - DOMAIN-KEYWORD,tanhuazu,MANUAL
+  - DOMAIN-KEYWORD,pikpak,MANUAL
+  - DOMAIN-KEYWORD,v2rayssr,MANUAL
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,MANUAL
+  - DOMAIN-SUFFIX,googleapis.cn,MANUAL
 
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
-  - RULE-SET,ai,韩国甲骨文[三网直连]
-  - RULE-SET,google,手动选择
-  - RULE-SET,YouTube,手动选择
-  - RULE-SET,proxy,手动选择
+  - RULE-SET,ai,KR
+  - RULE-SET,google,MANUAL
+  - RULE-SET,YouTube,MANUAL
+  - RULE-SET,proxy,MANUAL
   - RULE-SET,direct,DIRECT
   - RULE-SET,cncidr,DIRECT
-  - RULE-SET,telegramcidr,手动选择
+  - RULE-SET,telegramcidr,MANUAL
   - RULE-SET,collection,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
   - GEOIP,CN,DIRECT,no-resolve
-  - MATCH,手动选择
+  - MATCH,MANUAL
